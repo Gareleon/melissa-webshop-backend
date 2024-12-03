@@ -51,19 +51,7 @@ app.use("/api/orders", orderRoute);
 app.use("/api/melissa-admin", userRoute);
 app.use("/api/top-admin", adminRoute);
 
-const htmlMessage = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
-</head>
-<body>
-    <h1>Melissa Shop Server is live!</h1>
-</body>
-</html>
-`;
+const htmlMessage = "Melisa Shop is Running";
 
 async function main() {
   await mongoose.connect(DB_URL);
