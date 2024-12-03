@@ -51,10 +51,25 @@ app.use("/api/orders", orderRoute);
 app.use("/api/melissa-admin", userRoute);
 app.use("/api/top-admin", adminRoute);
 
+const htmlMessage = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; frame-src 'self' https://vercel.live;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+</head>
+<body>
+    <h1>Melissa Shop Server is live!</h1>
+</body>
+</html>
+`;
+
 async function main() {
   await mongoose.connect(DB_URL);
   app.get("/", (req, res) => {
-    res.send("Melissa Shop is running!");
+    res.send(htmlMessage);
   });
 }
 
