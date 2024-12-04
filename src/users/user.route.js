@@ -1,4 +1,4 @@
-const express = require(`express`);
+const express = require("express");
 const User = require("./user.model");
 const jwt = require("jsonwebtoken");
 
@@ -8,13 +8,20 @@ const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 router.post("/top-admin", async (req, res) => {
   const { username, password } = req.body;
   try {
+    // Find the admin by username
     const admin = await User.findOne({ username });
+
+    // If admin is not found, send 404 response and return
     if (!admin) {
-      res.status(404).send({ message: "Admin not found!" });
+      return res.status(404).send({ message: "Admin not found!" });
     }
+
+    // If password is incorrect, send 401 response and return
     if (admin.password !== password) {
-      res.status(401).send({ message: "Invalid password" });
+      return res.status(401).send({ message: "Invalid password" });
     }
+
+    // Generate the token if credentials are correct
     const token = jwt.sign(
       {
         id: admin._id,
@@ -25,8 +32,9 @@ router.post("/top-admin", async (req, res) => {
       { expiresIn: "1h" }
     );
 
+    // Send success response with token and user details
     return res.status(200).json({
-      message: "Authentication Successfull",
+      message: "Authentication successful",
       token: token,
       user: {
         username: admin.username,
@@ -35,7 +43,10 @@ router.post("/top-admin", async (req, res) => {
     });
   } catch (error) {
     console.log("Failed to log in as admin", error);
-    res.status(401).send({ message: "Failed to log in as admin" });
+    // Send a 500 response for unexpected errors
+    if (!res.headersSent) {
+      return res.status(500).send({ message: "Server error" });
+    }
   }
 });
 

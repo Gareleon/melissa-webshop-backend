@@ -6,8 +6,8 @@ const createAOrder = async (req, res) => {
     const savedOrder = await newOrder.save();
     res.status(200).json(savedOrder);
   } catch (error) {
-    console.error("Error creating order", error);
-    res.status(500).json({ message: "Failed to create order" });
+    console.error("Greška prilikom kreiranja porudžbine.", error);
+    res.status(500).json({ message: "Neuspešno kreiranje porudžbine." });
   }
 };
 
@@ -20,7 +20,7 @@ const getOrderByEmail = async (req, res) => {
     }
     res.status(200).json(orders);
   } catch (error) {
-    console.error("Greška prilikom prikazivanja porudžbine.", error);
+    console.error("Greška prilikom prikaza porudžbine.", error);
     res.status(500).json({ message: "Neuspešan prikaz porudžbine." });
   }
 };

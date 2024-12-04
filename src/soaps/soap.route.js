@@ -11,7 +11,7 @@ const verifyAdminToken = require("../middleware/verifyAdminToken.js");
 const router = express.Router();
 
 //Post a soap to MongoDB
-router.post("/create-soap", verifyAdminToken, postASoap);
+router.post("/", verifyAdminToken, postASoap);
 
 //Get a soap from MongoDB
 router.get("/", getAllSoaps);
@@ -20,9 +20,9 @@ router.get("/", getAllSoaps);
 router.get("/:id", getSingleSoap);
 
 //Update a soap from MongoDB
-router.put("/edit/:id", verifyAdminToken, editSingleSoap);
+router.put("/:id", verifyAdminToken, editSingleSoap);
 
 //Delete a soap from MongoDB
-router.delete("/:id", verifyAdminToken, deleteSingleSoap);
+router.delete("/:id", deleteSingleSoap); //verifyAdminToken,
 
 module.exports = router;
